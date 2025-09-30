@@ -2,8 +2,6 @@ services:
   simstudio:
     image: ghcr.io/simstudioai/simstudio:latest
     restart: unless-stopped
-    ports:
-      - '3000:3000'
     deploy:
       resources:
         limits:
@@ -37,8 +35,6 @@ services:
   realtime:
     image: ghcr.io/simstudioai/realtime:latest
     restart: unless-stopped
-    ports:
-      - '3002:3002'
     deploy:
       resources:
         limits:
@@ -72,8 +68,6 @@ services:
   db:
     image: pgvector/pgvector:pg17
     restart: unless-stopped
-    ports:
-      - '${POSTGRES_PORT:-5432}:5432'
     environment:
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
