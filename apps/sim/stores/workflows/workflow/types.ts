@@ -62,6 +62,11 @@ export interface BlockData {
   type?: string
 }
 
+export interface BlockLayoutState {
+  measuredWidth?: number
+  measuredHeight?: number
+}
+
 export interface BlockState {
   id: string
   type: string
@@ -76,6 +81,7 @@ export interface BlockState {
   advancedMode?: boolean
   triggerMode?: boolean
   data?: BlockData
+  layout?: BlockLayoutState
 }
 
 export interface SubBlockState {
@@ -148,7 +154,6 @@ export interface WorkflowState {
   // New field for per-workflow deployment status
   deploymentStatuses?: Record<string, DeploymentStatus>
   needsRedeployment?: boolean
-  hasActiveWebhook?: boolean
   // Drag state for undo/redo
   dragStartPosition?: DragStartPosition | null
 }
@@ -197,7 +202,7 @@ export interface WorkflowActions {
   setBlockWide: (id: string, isWide: boolean) => void
   setBlockAdvancedMode: (id: string, advancedMode: boolean) => void
   setBlockTriggerMode: (id: string, triggerMode: boolean) => void
-  updateBlockHeight: (id: string, height: number) => void
+  updateBlockLayoutMetrics: (id: string, dimensions: { width: number; height: number }) => void
   triggerUpdate: () => void
   updateLoopCount: (loopId: string, count: number) => void
   updateLoopType: (loopId: string, loopType: 'for' | 'forEach') => void
@@ -208,7 +213,6 @@ export interface WorkflowActions {
   generateLoopBlocks: () => Record<string, Loop>
   generateParallelBlocks: () => Record<string, Parallel>
   setNeedsRedeploymentFlag: (needsRedeployment: boolean) => void
-  setWebhookStatus: (hasActiveWebhook: boolean) => void
   revertToDeployedState: (deployedState: WorkflowState) => void
   toggleBlockAdvancedMode: (id: string) => void
   toggleBlockTriggerMode: (id: string) => void
